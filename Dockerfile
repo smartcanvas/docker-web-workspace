@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y git
 
 # Global install node tools
 RUN npm set progress=false && \
-    npm install --global --progress=false gulp bower npm-install-changed && \
+    npm install --global --progress=false gulp bower npm-install-changed polymer-cli && \
     echo '{ "allow_root": true }' > /root/.bowerrc
 
 # Binary may be called nodejs instead of node
