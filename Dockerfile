@@ -1,10 +1,7 @@
-FROM node:4-alpine
+FROM node:4-slim
 
 # Install git
-RUN apk -U add \
-	git \
-	su-exec \
-    && rm -rf /var/cache/apk/* /tmp/*
+RUN apt-get update && apt-get install -y git
 
 # Global install node tools
 RUN npm set progress=false && \
@@ -13,13 +10,6 @@ RUN npm set progress=false && \
 
 # Binary may be called nodejs instead of node
 RUN ln -s /usr/bin/nodejs /usr/bin/node
-
-# ENV DEVELOPER_USER developer
-# ENV HOME /home/${DEVELOPER_USER}
-# RUN useradd --create-home --home-dir ${HOME} --user-group -u 1000 ${DEVELOPER_USER}
-ENV gid=1000 uid=1000
-COPY run.sh /usr/local/bin/run.sh
-RUN chmod +x /usr/local/bin/run.sh
 
 # Define working directory.
 WORKDIR /workspace
@@ -34,11 +24,9 @@ ARG BUILD_DATE
 LABEL org.label-schema.vendor="DeskDrop" \
       org.label-schema.url="https://deskdrop.co" \
       org.label-schema.name="DeskDrop local development Web Workspace" \
-      org.label-schema.description="Alpine based Deskdrop web workspace" \
+      org.label-schema.description="Slim based Deskdrop web workspace" \
       org.label-schema.version=$VERSION \
       org.label-schema.vcs-url=$VCS_URL \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.docker.schema-version="1.0"
-
-CMD ["run.sh"]
