@@ -1,5 +1,4 @@
 FROM node:4-alpine
-MAINTAINER Fábio Uechi <fabio.uechi@gmail.com>
 
 # Install git
 RUN apk -U add \
